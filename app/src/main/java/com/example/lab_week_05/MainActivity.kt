@@ -9,14 +9,20 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
 class MainActivity : AppCompatActivity() {
 
 
-    private val retrofit by lazy{
+    private val retrofit by lazy {
+        val moshi = Moshi.Builder()
+            .add(KotlinJsonAdapterFactory())
+            .build()
+
         Retrofit.Builder()
             .baseUrl("https://api.thecatapi.com/v1/")
-            .addConverterFactory(MoshiConverterFactory.create())
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
             .build()
     }
 
